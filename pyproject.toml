@@ -1,0 +1,17 @@
+[project]
+name = "whos-that-pokemon-api"
+version = "1.0.0"
+dependencies = [
+  "fastapi[standard]",
+  "pytest",
+  "pytest-mock",
+  "pytest-asyncio",
+  "aiohttp",
+]
+requires-python = ">=3.12"
+authors = [{ name = "Liam Robertson", email = "liam2robertson@gmail.com" }]
+description = "Back-end API for Who's That Pokemon? game"
+readme = "README.md"
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
