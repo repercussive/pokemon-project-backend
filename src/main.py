@@ -16,7 +16,7 @@ async def lifespan():
 
 
 @app.get("/random-question")
-async def random_question():
+async def random_question() -> PokemonMultipleChoiceQuestion:
     pokemon_ids = generate_random_pokemon_ids(number_of_ids=4, max_id=151)
     pokeapi_urls = [
         f"https://pokeapi.co/api/v2/pokemon/{id}"
