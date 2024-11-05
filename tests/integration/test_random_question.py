@@ -24,7 +24,7 @@ async def test_random_question_endpoint(mocker):
     assert response.status_code == 200
 
     response_json = response.json()
-    assert response_json["correct_pokemon_id"] == 1
-    assert response_json["correct_pokemon_image_url"] == "bulbasaur_image_url"
-    assert sorted(response_json["pokemon_name_options"]) == \
+    assert response_json["correctPokemonId"] == 1
+    assert response_json["correctPokemonImageUrl"] == "bulbasaur_image_url"
+    assert sorted(response_json["pokemonNameOptions"]) == \
         sorted(["bulbasaur", "ivysaur", "venusaur", "charmander"])

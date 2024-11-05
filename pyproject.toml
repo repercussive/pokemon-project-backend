@@ -3,6 +3,7 @@ name = "whos-that-pokemon-api"
 version = "1.0.0"
 dependencies = [
   "fastapi[standard]",
+  "fastapi-camelcase",
   "pytest",
   "pytest-mock",
   "pytest-asyncio",

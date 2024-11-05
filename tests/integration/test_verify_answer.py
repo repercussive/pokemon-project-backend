@@ -22,9 +22,9 @@ async def verify_answer_helper(mocker, guessed_pokemon_name: str, expected_respo
 async def test_verify_answer_works_when_user_is_correct(mocker):
     guessed_pokemon_name = "bulbasaur"
     await verify_answer_helper(mocker, guessed_pokemon_name, expected_response={
-        "is_correct": True,
-        "correct_pokemon_image_url": "bulbasaur_image_url",
-        "correct_pokemon_name": "bulbasaur"
+        "isCorrect": True,
+        "correctPokemonImageUrl": "bulbasaur_image_url",
+        "correctPokemonName": "bulbasaur"
     })
 
 
@@ -32,9 +32,9 @@ async def test_verify_answer_works_when_user_is_correct(mocker):
 async def test_verify_answer_is_case_insensitive(mocker):
     guessed_pokemon_name = "bUlBaSaUr"
     await verify_answer_helper(mocker, guessed_pokemon_name, expected_response={
-        "is_correct": True,
-        "correct_pokemon_image_url": "bulbasaur_image_url",
-        "correct_pokemon_name": "bulbasaur"
+        "isCorrect": True,
+        "correctPokemonImageUrl": "bulbasaur_image_url",
+        "correctPokemonName": "bulbasaur"
     })
 
 
@@ -42,7 +42,7 @@ async def test_verify_answer_is_case_insensitive(mocker):
 async def test_verify_answer_works_when_user_is_incorrect(mocker):
     guessed_pokemon_name = "charmander"
     await verify_answer_helper(mocker, guessed_pokemon_name, expected_response={
-        "is_correct": False,
-        "correct_pokemon_image_url": "bulbasaur_image_url",
-        "correct_pokemon_name": "bulbasaur"
+        "isCorrect": False,
+        "correctPokemonImageUrl": "bulbasaur_image_url",
+        "correctPokemonName": "bulbasaur"
     })
