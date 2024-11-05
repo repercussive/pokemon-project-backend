@@ -1,12 +1,21 @@
 import random
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from models import MultipleChoiceQuestion, AnswerResult
 from utils.pokemon import generate_random_pokemon_ids, generate_pokeapi_query
 from utils.http_client import HttpClient
 from utils.fetch import fetch_json_single, fetch_json_many
-from fastapi import FastAPI
 from contextlib import asynccontextmanager
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://localhost:4173"],
+    allow_credentials=True,
+    allow_methods=["GET"],
+    allow_headers=["*"],
+)
 
 
 @asynccontextmanager
