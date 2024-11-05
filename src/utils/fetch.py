@@ -1,12 +1,11 @@
 import asyncio
-import aiohttp
+from .http_client import HttpClient
+
+async def fetch_json_single(url: str) -> dict:
+    client = HttpClient.get_aiohttp_client()
+    async with client.get(url) as response:
+        return await response.json()
 
 
-async def fetch(url: str):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            return await response.text()
-
-
-async def fetch_all(urls: list[str]):
-    return await asyncio.gather(*[fetch(url) for url in urls])
+async def fetch_json_many(urls: list[str]) -> list[dict]:
+    return await asyncio.gather(*[fetch_json_single(url) for url in urls])

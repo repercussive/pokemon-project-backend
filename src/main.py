@@ -1,21 +1,29 @@
-import json
 from utils.pokemon import generate_random_pokemon_ids
-from utils.fetch import fetch_all
+from utils.http_client import HttpClient
+from utils.fetch import fetch_json_many
 from models import PokemonMultipleChoiceQuestion
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
 
 app = FastAPI()
 
 
+@asynccontextmanager
+async def lifespan():
+    HttpClient.get_aiohttp_client()
+    yield
+    await HttpClient.close_aiohttp_client()
+
+
 @app.get("/random-question")
-async def random_question() -> PokemonMultipleChoiceQuestion:
+async def random_question():
     pokemon_ids = generate_random_pokemon_ids(number_of_ids=4, max_id=151)
     pokeapi_urls = [
         f"https://pokeapi.co/api/v2/pokemon/{id}"
         for id in pokemon_ids
     ]
 
-    all_pokemon = [json.loads(response) for response in await fetch_all(pokeapi_urls)]
+    all_pokemon = await fetch_json_many(pokeapi_urls)
 
     return PokemonMultipleChoiceQuestion(
         correct_pokemon_id=pokemon_ids[0],

@@ -10,13 +10,13 @@ async def test_random_question_endpoint(mocker):
         "src.main.generate_random_pokemon_ids",
         return_value=[1, 2, 3, 4])
 
-    mock_fetch_all = AsyncMock(return_value=[
-        '{"name": "bulbasaur", "sprites": {"front_default": "bulbasaur_image_url"}}',
-        '{"name": "ivysaur", "sprites": {"front_default": "ivysaur_image_url"}}',
-        '{"name": "venusaur", "sprites": {"front_default": "venusaur_image_url"}}',
-        '{"name": "charmander", "sprites": {"front_default": "charmander_image_url"}}'
+    mock_fetch_json_many = AsyncMock(return_value=[
+        {"name": "bulbasaur", "sprites": {"front_default": "bulbasaur_image_url"}},
+        {"name": "ivysaur", "sprites": {"front_default": "ivysaur_image_url"}},
+        {"name": "venusaur", "sprites": {"front_default": "venusaur_image_url"}},
+        {"name": "charmander", "sprites": {"front_default": "charmander_image_url"}}
     ])
-    mocker.patch("src.main.fetch_all", mock_fetch_all)
+    mocker.patch("src.main.fetch_json_many", mock_fetch_json_many)
 
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         response = await client.get("/random-question")
