@@ -29,3 +29,15 @@ async def random_question() -> PokemonMultipleChoiceQuestion:
         correct_pokemon_image_url=pokemon_list[0]["sprites"]["front_default"],
         pokemon_name_options=pokemon_name_options
     )
+
+
+@app.get("/verify-answer")
+async def verify_answer(correct_pokemon_id: int, guessed_pokemon_name: str) -> AnswerResult:
+    correct_pokemon = await fetch_json_single(generate_pokeapi_query(correct_pokemon_id))
+    correct_pokemon_name = correct_pokemon["name"]
+
+    return AnswerResult(
+        is_correct=correct_pokemon_name.casefold() == guessed_pokemon_name.casefold(),
+        correct_pokemon_image_url=correct_pokemon["sprites"]["front_default"],
+        correct_pokemon_name=correct_pokemon_name
+    )
