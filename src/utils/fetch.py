@@ -1,6 +1,7 @@
 import asyncio
 from .http_client import HttpClient
 
+
 async def fetch_json_single(url: str) -> dict:
     client = HttpClient.get_aiohttp_client()
     async with client.get(url) as response:
