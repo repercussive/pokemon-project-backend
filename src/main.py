@@ -1,6 +1,8 @@
 import random
-from fastapi import FastAPI
+import aiohttp
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from models import MultipleChoiceQuestion, AnswerResult
 from utils.pokemon import generate_random_pokemon_ids, generate_pokeapi_query
 from utils.http_client import HttpClient
@@ -16,6 +18,13 @@ app.add_middleware(
     allow_methods=["GET"],
     allow_headers=["*"],
 )
+
+@app.exception_handler(aiohttp.ClientConnectorError)
+async def pokeapi_unavailable_exception_handler(request: Request, exc: aiohttp.ClientConnectionError):
+    return JSONResponse(
+        status_code=504,
+        content={"message": "The external Pokémon data service could not be reached"}
+    )
 
 
 @asynccontextmanager
